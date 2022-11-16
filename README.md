@@ -12,7 +12,7 @@ jobs:
         steps:
         - uses: actions/checkout@v2
         - name: Test and deploy helm charts
-            uses: forestsoftgmbh/gh-chart-action@v1
+            uses: forestsoftgmbh/gh-chart-action@main
             with:
                 chart: ./path/to/chart
                 deploy_token: ${{ secrets.HELM_CHART_REPO_TOKEN }}
