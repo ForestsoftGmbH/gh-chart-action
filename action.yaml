@@ -24,14 +24,13 @@ runs:
          fi
          $GITHUB_ACTION_PATH/build.sh ${{ inputs.chart }}
     - name: "Release chart"
-      if: ${{ inputs.release }} == 'true'
+      if: inputs.release == 'true'
       shell: bash
       run: |
            export CI_COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
            apk add --update git openssh-client sed rsync
            mkdir -p /root/.ssh/
            echo "${{ inputs.deploy_token }}" > /root/.ssh/id_rsa
-           ls -la /root/.ssh/
            chmod 600 /root/.ssh/id_rsa
            git config --global user.email "foerster@forestsoft.de"
            git config --global user.name "Sebastian"
