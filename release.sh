@@ -1,8 +1,9 @@
 #!/bin/bash
 set -xe
 releaseDir=$(mktemp -d)
-#mkdir -p ~/.ssh
-#ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+mkdir -p ~/.ssh
+ssh-keygen -R github.com
+ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 git clone git@github.com:Forestsoft-de/helm-charts.git $releaseDir
 rsync -a --checksum  charts/ $releaseDir/charts
 cd $releaseDir/charts
