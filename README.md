@@ -9,6 +9,8 @@ on:
 jobs:   
     validate_chart:
         runs-on: ubuntu-latest
+        container: 
+            image: quay.io/helmpack/chart-testing:v3.5.0
         steps:
         - uses: actions/checkout@v2
         - name: Test and deploy helm charts
