@@ -27,6 +27,7 @@ runs:
       if: ${{ inputs.release }} == 'true'
       shell: bash
       run: |
+           export CI_COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
            apk add --update git openssh-client sed rsync
            mkdir -p ~/.ssh/
            echo "{{ $inputs.deploy_token }}" > ~/.ssh/id_rsa
