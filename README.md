@@ -15,6 +15,6 @@ jobs:
             uses: forestsoftgmbh/gh-chart-action@v1
             with:
                 chart: ./path/to/chart
-                deploy_token: ${{ secrets.DEPLOY_TOKEN }}
+                deploy_token: ${{ secrets.HELM_CHART_REPO_TOKEN }}
                 release: false
 ```
