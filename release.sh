@@ -4,7 +4,7 @@ releaseDir=$(mktemp -d)
 mkdir -p ~/.ssh
 ssh-keygen -R github.com
 ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-git clone git@github.com:Forestsoft-de/helm-charts.git $releaseDir
+git clone git@github.com:ForestsoftGmbH/helm-charts.git $releaseDir
 rsync -a --checksum  charts/ $releaseDir/charts
 cd $releaseDir/charts
 helm repo index . --url https://forestsoftgmbh.github.io/helm-charts/charts
