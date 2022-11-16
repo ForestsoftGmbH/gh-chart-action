@@ -19,6 +19,9 @@ runs:
       shell: bash
       run: |
          set -x
+         if [ ! -d "./.ct" ]; then
+           cp -R $GITHUB_ACTION_PATH/.ct .
+         fi
          $GITHUB_ACTION_PATH/build.sh ${{ inputs.chart }}
     - name: "Release chart"
       if: ${{ inputs.release }} == 'true'
