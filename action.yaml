@@ -23,7 +23,7 @@ runs:
       run: |
          git config --global --add safe.directory $(pwd)
          mkdir -p /root/.kube/
-         echo "${{ inputs.kubeconfig }}" > /root/.kube/config
+         echo "${{ inputs.kubeconfig }}" | base64 -d  >  /root/.kube/config
          export CI_COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
          echo "${{ inputs.deploy_token }}" > /root/.ssh/id_rsa
          chmod 600 /root/.ssh/id_rsa
