@@ -1,0 +1,25 @@
+name: "Build production Image"
+on:
+  push:
+  workflow_call:
+    secrets:
+      DOCKER_USERNAME:
+        required: true
+      DOCKER_PASSWORD:
+        required: true
+  
+  workflow_dispatch:
+
+jobs:
+  docker-production:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ForestsoftGmbH/gh-build-action@lates_image_cache
+        with:
+          DOCKER_IMAGE: forestsoft/chart-test
+          DOCKER_TAG: ${{steps.detect_version.outputs.docker_tag}}
+          File: ./Dockerfile
+          context: .
+          Username: ${{ secrets.DOCKER_USERNAME }}
+          Password: ${{ secrets.DOCKER_PASSWORD }}
