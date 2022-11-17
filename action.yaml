@@ -7,6 +7,9 @@ inputs:
   deploy_token:
     description: 'Token to access the Helm repo'
     required: true
+  kubeconfig:
+    description: 'key for kubernetes config'
+    required: true
   release:
     description: 'Should the chart be released'
     default: 'false'
@@ -15,20 +18,22 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: "Setup"
+      shell: bash
+      run: |
+         git config --global --add safe.directory $(pwd)
+         mkdir -p /root/.kube/
+         echo "${{ inputs.kubeconfig }}" > /root/.kube/config
+         export CI_COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
+         echo "${{ inputs.deploy_token }}" > /root/.ssh/id_rsa
+         chmod 600 /root/.ssh/id_rsa
     - name: "Build chart"
       shell: bash
       run: |
          set -x
-         pwd
-         ls -la .
-         git config --global --add safe.directory $(pwd)
          /ct/build.sh ${{ inputs.chart }}
     - name: "Release chart"
       if: inputs.release == 'true'
       shell: bash
       run: |
-           git config --global --add safe.directory $(pwd)
-           export CI_COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
-           echo "${{ inputs.deploy_token }}" > /root/.ssh/id_rsa
-           chmod 600 /root/.ssh/id_rsa
            /ct/release.sh
