@@ -19,10 +19,8 @@ runs:
       shell: bash
       run: |
          set -x
-         if [ -d "./.ct" ]; then
-           rm -Rf /root/.ct/
-           cp -R ./.ct /root/.ct/
-         fi
+         pwd
+         ls -la .
          /ct/build.sh ${{ inputs.chart }}
     - name: "Release chart"
       if: inputs.release == 'true'
