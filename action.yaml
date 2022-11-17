@@ -21,11 +21,13 @@ runs:
          set -x
          pwd
          ls -la .
+         git config --global --add safe.directory $(pwd)
          /ct/build.sh ${{ inputs.chart }}
     - name: "Release chart"
       if: inputs.release == 'true'
       shell: bash
       run: |
+           git config --global --add safe.directory $(pwd)
            export CI_COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
            echo "${{ inputs.deploy_token }}" > /root/.ssh/id_rsa
            chmod 600 /root/.ssh/id_rsa
