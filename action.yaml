@@ -27,6 +27,7 @@ runs:
          export CI_COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
          echo "${{ inputs.deploy_token }}" > /root/.ssh/id_rsa
          chmod 600 /root/.ssh/id_rsa
+         chmod 600 /root/.kube/config
     - name: "Build chart"
       shell: bash
       run: |
