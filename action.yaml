@@ -30,6 +30,9 @@ runs:
          chmod 600 /root/.ssh/id_rsa
          chmod 600 /root/.kube/config
          chmod 600 ~/.kube/config
+         rm /root.ssh/known_hosts || true
+         ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts 
+         chmod 600 /root/.ssh/known_hosts
     - name: "Build chart"
       shell: bash
       run: |
